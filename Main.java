@@ -23,13 +23,23 @@ public class Main {
                 System.out.println("Ошибка: Пустой ввод");
                 continue;
             }
-
             if (!countSpace(elements)) {
                 System.out.println("Ошибка: Слишком много пробелов в выражении");
                 continue;
             }
-
             String[] strings = elements.split(" ");
+            if (isNumber(strings[0]) && strings.length == 1){
+                System.out.println("Ответ: " + strings[0]);
+                continue;
+            }
+            if (!isNumber(strings[0]) && !isOperator(strings[0]) && !isX(strings[0]) && strings.length == 1){
+                System.out.println("Ошибка: Пользователь неправильно ввёл");
+                continue;
+            }
+            if (!isNumber(strings[0]) && !isOperator(strings[0]) && !isX(strings[0]) && strings[1].equals("=")){
+                System.out.println("Ошибка: Неверное название переменной");
+                continue;
+            }
             if (isX(strings[0]) && strings.length == 1) {
                 printX(strings[0]);
                 continue;
