@@ -30,6 +30,10 @@ public class Main {
             }
 
             String[] strings = elements.split(" ");
+            if (isX(strings[0]) && strings.length == 1) {
+                printX(strings[0]);
+                continue;
+            }
             if (isX(strings[0]) && strings[1].equals("=")) {
                 calculatorWithX(strings);
                 continue;
@@ -177,6 +181,17 @@ public class Main {
                 break;
             default:
                 System.out.println("Ошибка: Неверное имя переменной");
+        }
+    }
+
+    public static void printX(String str) {
+        switch (str.strip()) {
+            case "x1" -> System.out.println(x1);
+            case "x2" -> System.out.println(x2);
+            case "x3" -> System.out.println(x3);
+            case "x4" -> System.out.println(x4);
+            case "x5" -> System.out.println(x5);
+            default -> System.out.println("Ошибка: Неправильная переменная");
         }
     }
 
