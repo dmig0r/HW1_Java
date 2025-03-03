@@ -238,12 +238,12 @@ public class Main {
         if (strings.length == 1 && isNumber(strings[0])) {
             return new BigInteger(strings[0]);
         }
-        for (String string : strings) {
-            if (isNumber(string)) {
-                stackX.push(new BigInteger(string));
+        for (int i = 0; i < strings.length; i++) {
+            if (isNumber(strings[i])) {
+                stackX.push(new BigInteger(strings[i]));
                 countNumbers++;
-            } else if (isX(string)) {
-                switch (string) {
+            } else if (isX(strings[i])) {
+                switch (strings[i]) {
                     case "x1" -> stackX.push(x1);
                     case "x2" -> stackX.push(x2);
                     case "x3" -> stackX.push(x3);
@@ -251,27 +251,35 @@ public class Main {
                     case "x5" -> stackX.push(x5);
                 }
                 countNumbers++;
-            } else if (isOperator(string)) {
+            } else if (isOperator(strings[i])) {
                 countOperators++;
                 if (countOperators >= countNumbers) {
                     error = false;
-                    System.out.println("Ошибка: Некорректная постфиксная запись");
+                    if (isOperator(strings[i-1]) || isOperator(strings[i+1])){
+                        System.out.println("Ошибка: Слишком много операндов");
+                    } else {
+                        System.out.println("Ошибка: Некорректная постфиксная запись");
+                    }
                     break;
                 }
                 BigInteger number = stackX.pop();
                 BigInteger nextNumber = stackX.pop();
-                BigInteger result = operation(nextNumber, number, string);
+                BigInteger result = operation(nextNumber, number, strings[i]);
                 if (result == null) {
                     error = false;
                     break;
                 }
                 answer = result;
                 stackX.push(answer);
-            } else if (noSpace(string)) {
+            } else if (noSpace(strings[i])) {
                 System.out.println("Ошибка: Недостаточное количество пробелов");
                 error = false;
                 break;
-            } else {
+            } else if (strings[i].equals("=")){
+                System.out.println("Ошибка: Неправильное присваивание");
+                error = false;
+                break;
+            }else {
                 System.out.println("Ошибка: Неизвестный символ");
                 error = false;
                 break;
