@@ -131,6 +131,30 @@ public class Main {
         }
 
         if (strings.length == 3 && isX(strings[2])) {
+            BigInteger value = getX(strings[2]); // Получаем значение переменной
+            if (value == null) {
+                System.out.println("Ошибка: Неверное имя переменной");
+                return;
+            }
+            xValue(strings[0], value); // Устанавливаем значение переменной
+            System.out.println("Ответ: " + value);
+            return;
+        }
+
+        int countX = 0;
+        int countEquals = 0;
+        for (String string : strings) {
+            if (string.equals("=") && countEquals == 0) {
+                countEquals++;
+            } else if (isX(string) && countEquals == 1) {
+                countX++;
+            }else if (string.equals("=") && countEquals >= 1 && countX >= 1) {
+                System.out.println("Ошибка: нельзя присваивать значение нескольким переменным");
+                return;
+            }
+        }
+
+        if (strings.length == 3 && isX(strings[2])) {
             switch (strings[2].strip()) {
                 case "x1":
                     System.out.println("Ответ: " + x1);
@@ -158,30 +182,8 @@ public class Main {
             return;
         }
 
-        switch (strings[0].strip()) {
-            case "x1":
-                x1 = result;
-                System.out.println("Ответ: " + x1);
-                break;
-            case "x2":
-                x2 = result;
-                System.out.println("Ответ: " + x2);
-                break;
-            case "x3":
-                x3 = result;
-                System.out.println("Ответ: " + x3);
-                break;
-            case "x4":
-                x4 = result;
-                System.out.println("Ответ: " + x4);
-                break;
-            case "x5":
-                x5 = result;
-                System.out.println("Ответ: " + x5);
-                break;
-            default:
-                System.out.println("Ошибка: Неверное имя переменной");
-        }
+        xValue(strings[0], result);
+        System.out.println("Ответ: " + result);
     }
 
     public static void printX(String str) {
@@ -192,6 +194,28 @@ public class Main {
             case "x4" -> System.out.println(x4);
             case "x5" -> System.out.println(x5);
             default -> System.out.println("Ошибка: Неправильная переменная");
+        }
+    }
+
+    public static BigInteger getX(String x) {
+        return switch (x.strip()) {
+            case "x1" -> x1;
+            case "x2" -> x2;
+            case "x3" -> x3;
+            case "x4" -> x4;
+            case "x5" -> x5;
+            default -> null;
+        };
+    }
+
+    private static void xValue(String x, BigInteger value) {
+        switch (x.strip()) {
+            case "x1" -> x1 = value;
+            case "x2" -> x2 = value;
+            case "x3" -> x3 = value;
+            case "x4" -> x4 = value;
+            case "x5" -> x5 = value;
+            default -> System.out.println("Ошибка: Неверное имя переменной");
         }
     }
 
