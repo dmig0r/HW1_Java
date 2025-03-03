@@ -141,12 +141,12 @@ public class Main {
         }
 
         if (strings.length == 3 && isX(strings[2])) {
-            BigInteger value = getX(strings[2]); // Получаем значение переменной
+            BigInteger value = getX(strings[2]);
             if (value == null) {
                 System.out.println("Ошибка: Неверное имя переменной");
                 return;
             }
-            xValue(strings[0], value); // Устанавливаем значение переменной
+            xValue(strings[0], value);
             System.out.println("Ответ: " + value);
             return;
         }
