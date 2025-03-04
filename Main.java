@@ -81,10 +81,6 @@ public class Main {
         }
         for (int i = 0; i < str.length(); i++) {
             char symbol = str.charAt(i);
-            if (i == 0 && symbol == '-') {
-                System.out.println("Ошибка: Отрицательное число на вводе");
-                return false;
-            }
             if (!Character.isDigit(symbol)) {
                 return false;
             }
@@ -142,10 +138,6 @@ public class Main {
 
         if (strings.length == 3 && isX(strings[2])) {
             BigInteger value = getX(strings[2]);
-            if (value == null) {
-                System.out.println("Ошибка: Неверное имя переменной");
-                return;
-            }
             xValue(strings[0], value);
             System.out.println("Ответ: " + value);
             return;
@@ -198,11 +190,11 @@ public class Main {
 
     public static void printX(String str) {
         switch (str.strip()) {
-            case "x1" -> System.out.println(x1);
-            case "x2" -> System.out.println(x2);
-            case "x3" -> System.out.println(x3);
-            case "x4" -> System.out.println(x4);
-            case "x5" -> System.out.println(x5);
+            case "x1" -> System.out.println("Ответ: " + x1);
+            case "x2" -> System.out.println("Ответ: " + x2);
+            case "x3" -> System.out.println("Ответ: " + x3);
+            case "x4" -> System.out.println("Ответ: " + x4);
+            case "x5" -> System.out.println("Ответ: " + x5);
             default -> System.out.println("Ошибка: Неправильная переменная");
         }
     }
@@ -255,7 +247,7 @@ public class Main {
                 countOperators++;
                 if (countOperators >= countNumbers) {
                     error = false;
-                    if (isOperator(strings[i-1]) || isOperator(strings[i+1])){
+                    if (i > 0 && (isOperator(strings[i-1]) || isOperator(strings[i+1]))){
                         System.out.println("Ошибка: Слишком много операндов");
                     } else {
                         System.out.println("Ошибка: Некорректная постфиксная запись");
@@ -271,6 +263,10 @@ public class Main {
                 }
                 answer = result;
                 stackX.push(answer);
+            }else if (strings[i].charAt(0) == ('-')) {
+                System.out.println("Ошибка: Отрицательное число на вводе");
+                error = false;
+                break;
             } else if (noSpace(strings[i])) {
                 System.out.println("Ошибка: Недостаточное количество пробелов");
                 error = false;
